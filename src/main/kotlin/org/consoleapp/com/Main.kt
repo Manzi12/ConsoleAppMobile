@@ -17,6 +17,7 @@ fun main() {
             2 -> updateTask()
             3 -> listTasks()
             4 -> deleteTask()
+            5 -> tastStats()
             -1 -> println("Exiting App")
             else -> println("Invalid Option")
         }
@@ -36,6 +37,7 @@ fun menu() : Int {
     println(" 2. Update Task")
     println(" 3. List All Tasks")
     println(" 4. Delete Task")
+    println(" 5. Tasks Statistics")
     println("-1. Exit")
     println()
     print("Enter an integer : ")
@@ -63,3 +65,6 @@ fun deleteTask(){
     println("you chose detele task")
 }
 
+fun tastStats(){
+    println("you chose Task Statistics")
+}
