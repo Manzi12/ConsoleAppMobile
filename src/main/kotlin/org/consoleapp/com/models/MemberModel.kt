@@ -1,12 +1,9 @@
 package org.consoleapp.com.models
 
-import java.sql.Time
-import java.util.*
-
 data class MemberModel(var id: Long = 0,
-                       var memberFName: String = "",
-                       var memberLName: String = "",
-                       var address: String = ""
-
-
+                       var firstName: String = "",
+                       var lastName: String = "",
+                       var dateOfBirth: String = "",
+                       var email: String = "",
+                       var phoneNumber: String = ""
 )
