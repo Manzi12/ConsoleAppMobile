@@ -1,13 +1,15 @@
 package org.consoleapp.com.controllers
 
 import mu.KotlinLogging
-import org.consoleapp.com.models.MemberMemStore
+import org.consoleapp.com.models.MemberJSONStore
+import org.consoleapp.com.models.MemberStore
 import org.consoleapp.com.models.MemberModel
 import org.consoleapp.com.views.MemberView
 
 
 class MemberController {
-    val members = MemberMemStore()
+    //val members = MemberStore()
+    val members = MemberJSONStore()
     val memberView = MemberView()
     val logger = KotlinLogging.logger {}
 

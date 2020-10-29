@@ -1,5 +1,6 @@
 package org.consoleapp.com.views
 
+import org.consoleapp.com.models.MemberJSONStore
 import org.consoleapp.com.models.MemberMemStore
 import org.consoleapp.com.models.MemberModel
 import java.util.regex.Pattern
@@ -26,7 +27,8 @@ class MemberView {
         return option
     }
 
-    fun listMembers(members : MemberMemStore){
+
+    fun listMembers(members : MemberJSONStore){
         println("List All Members")
         println()
         members.logAll()
