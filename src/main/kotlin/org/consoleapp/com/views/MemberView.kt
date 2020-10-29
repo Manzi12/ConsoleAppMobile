@@ -2,6 +2,7 @@ package org.consoleapp.com.views
 
 import org.consoleapp.com.models.MemberMemStore
 import org.consoleapp.com.models.MemberModel
+import java.util.regex.Pattern
 
 class MemberView {
     fun menu(): Int{
@@ -12,8 +13,8 @@ class MemberView {
         println(" 1. Add Member")
         println(" 2. Update Member Details")
         println(" 3. List All Members")
-        println(" 4. Delete Member")
-        println(" 5. Dummy Data")
+        println(" 4. Search Member")
+        println(" -99. Dummy Data")
         println(" 100. Exit")
         println()
         print("Enter an Option : ")
@@ -95,5 +96,12 @@ class MemberView {
         else
             -9
         return searchId
+    }
+
+    fun String.isEmailValid(): Boolean{
+        val expression = "^[\\w.-]+@([\\w\\-]+\\.)+[A-Z]{2,8}$"
+        val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
+        val matcher = pattern.matcher(this)
+        return matcher.matches()
     }
 }
