@@ -58,6 +58,14 @@ class MemberJSONStore : MemberStore {
         serialize()
     }
 
+    override fun delete(member: MemberModel) {
+        var foundMember = findOne(member.id!!)
+        if(foundMember != null){
+            members.remove(foundMember)
+        }
+        serialize()
+    }
+
     internal fun logAll(){
         members.forEach { logger.info("${it}")}
     }

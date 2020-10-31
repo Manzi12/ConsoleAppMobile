@@ -2,13 +2,14 @@ package org.consoleapp.com.controllers
 
 import mu.KotlinLogging
 import org.consoleapp.com.models.MemberJSONStore
+import org.consoleapp.com.models.MemberMemStore
 import org.consoleapp.com.models.MemberStore
 import org.consoleapp.com.models.MemberModel
 import org.consoleapp.com.views.MemberView
 
 
 class MemberController {
-    //val members = MemberStore()
+    //val members = MemberMemStore()
     val members = MemberJSONStore()
     val memberView = MemberView()
     val logger = KotlinLogging.logger {}
@@ -28,6 +29,7 @@ class MemberController {
                 2 -> update()
                 3 -> list()
                 4 -> search()
+                5 -> delete()
                 -99 -> dummyData()
                 -1 -> println("Exiting App")
                 else -> println("Invalid Option")
@@ -68,6 +70,20 @@ class MemberController {
                 logger.info("Member Not Added")
         }else
             println("Member Not Added")
+    }
+
+    fun delete(){
+        memberView.listMembers(members)
+        var searchId = memberView.getId()
+        val aMember = search(searchId)
+
+        if(aMember != null){
+            members.delete(aMember)
+            println("Member Deleted....")
+            memberView.listMembers(members)
+        }
+        else
+            println("Member Not Deleted....")
     }
 
     fun search(){

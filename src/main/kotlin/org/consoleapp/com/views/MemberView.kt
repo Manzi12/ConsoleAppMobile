@@ -3,6 +3,7 @@ package org.consoleapp.com.views
 import org.consoleapp.com.models.MemberJSONStore
 import org.consoleapp.com.models.MemberMemStore
 import org.consoleapp.com.models.MemberModel
+import org.consoleapp.com.models.MemberStore
 import java.util.regex.Pattern
 
 class MemberView {
@@ -15,6 +16,7 @@ class MemberView {
         println(" 2. Update Member Details")
         println(" 3. List All Members")
         println(" 4. Search Member")
+        println(" 5. Delete Member")
         println(" -99. Dummy Data")
         println(" 100. Exit")
         println()
@@ -28,6 +30,13 @@ class MemberView {
     }
 
 
+    fun listMembers(members : MemberMemStore){
+        println("List All Members")
+        println()
+        members.logAll()
+        println()
+    }
+
     fun listMembers(members : MemberJSONStore){
         println("List All Members")
         println()
@@ -39,13 +48,13 @@ class MemberView {
         println()
         print("Enter your first name : ")
         member.firstName = readLine()!!
-        println("Enter Last Name")
+        print("Enter Last Name: ")
         member.lastName = readLine()!!
-        println("Enter Your date of birth (dd/mm/yyyy)")
+        print("Enter Your date of birth (dd/mm/yyyy) : ")
         member.dateOfBirth = readLine()!!
-        println("Enter Your Email ")
+        print("Enter Your Email: ")
         member.email = readLine()!!
-        println("Enter Your Phone Number (0123456789) ")
+        print("Enter Your Phone Number (0123456789): ")
         member.phoneNumber = readLine()!!
         return member.firstName.isNotEmpty() && member.email.isNotEmpty()
     }

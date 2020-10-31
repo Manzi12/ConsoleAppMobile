@@ -38,6 +38,13 @@ class MemberMemStore: MemberStore {
         }
     }
 
+    override fun delete(member: MemberModel) {
+        var foundMember = findOne(member.id!!)
+        if(foundMember != null){
+            members.remove(foundMember)
+        }
+    }
+
     internal fun logAll(){
         members.forEach { logger.info ("${it}")}
     }

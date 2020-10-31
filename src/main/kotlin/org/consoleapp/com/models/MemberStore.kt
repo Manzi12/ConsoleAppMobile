@@ -5,6 +5,8 @@ interface MemberStore {
     fun findOne(id: Long) : MemberModel?
     fun create(member: MemberModel)
     fun update(member: MemberModel)
+    fun delete(member: MemberModel)
+
 }
 
 
