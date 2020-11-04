@@ -17,8 +17,8 @@ val JSON_FILE = "members.json"
 val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
 val listType = object : TypeToken<ArrayList<MemberModel>>() {}.type
 
-fun generateRandomId(): Long {
-    return Random.nextLong()
+fun generateRandomId(): Int {
+    return Random.nextInt()
 }
 
 
@@ -35,7 +35,7 @@ class MemberJSONStore : MemberStore {
         return members
     }
 
-    override fun findOne(id: Long): MemberModel? {
+    override fun findOne(id: Int): MemberModel? {
         var foundMember : MemberModel? = members.find { m -> m.id == id }
         return foundMember
     }

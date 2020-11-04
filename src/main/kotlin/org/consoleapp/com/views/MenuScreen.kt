@@ -35,6 +35,29 @@ class MenuScreen : View("Member Main Menu") {
                 }
             }
             text("")
+            button("Update Members Details") {
+
+                isDefaultButton = true
+                useMaxWidth = true
+                action {
+                    runAsyncWithProgress {
+                        memberUIController.loadUpdateScreen()
+                    }
+                }
+            }
+
+            text("")
+            button("Delete Members") {
+
+                isDefaultButton = true
+                useMaxWidth = true
+                action {
+                    runAsyncWithProgress {
+                        memberUIController.loadDeleteScreen()
+                    }
+                }
+            }
+            text("")
             button("Exit") {
 
                 isDefaultButton = true

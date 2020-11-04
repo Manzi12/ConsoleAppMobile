@@ -1,13 +1,15 @@
 package org.consoleapp.com.views
 
+import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Orientation
 import org.consoleapp.com.controllers.MemberUIController
 import tornadofx.*
+import java.text.SimpleDateFormat
 
 class AddMemberScreen: View("Add Member") {
     val model = ViewModel()
-    val _firstName = model.bind { SimpleStringProperty() }
+    val _firstName = model.bind {SimpleStringProperty()  }
     val _lastName = model.bind { SimpleStringProperty() }
     val _dateOfBirth = model.bind { SimpleStringProperty() }
     val _email = model.bind { SimpleStringProperty() }
@@ -15,22 +17,22 @@ class AddMemberScreen: View("Add Member") {
     val memberUIController: MemberUIController by inject()
 
     override val root = form {
-        setPrefSize(600.0, 200.0)
+        setPrefSize(300.0, 100.0)
         fieldset(labelPosition = Orientation.VERTICAL) {
             field("First Name") {
                 textfield(_firstName).required()
             }
             field("Last Name") {
-                textarea(_lastName).required()
+                textfield(_lastName).required()
             }
             field("Date Of Birth") {
                 textfield(_dateOfBirth).required()
             }
             field("Email") {
-                textarea(_email).required()
+                textfield(_email).required()
             }
             field("Phone Number") {
-                textarea(_phoneNumber).required()
+                textfield(_phoneNumber).required()
             }
             button("Add") {
                 enableWhen(model.valid)
@@ -38,13 +40,18 @@ class AddMemberScreen: View("Add Member") {
                 useMaxWidth = true
                 action {
                     runAsyncWithProgress {
-                        memberUIController.add(_firstName.toString(),
-                        _lastName.toString(),
-                        _phoneNumber.toString(),
-                        _email.toString(),
-                        _phoneNumber.toString())
+                        memberUIController.add(_firstName.getValue(),
+                        _lastName.getValue(),
+                        _dateOfBirth.getValue(),
+                        _email.getValue(),
+                        _phoneNumber.getValue())
 
                     }
+                    textfield(_firstName).clear()
+                    textfield(_lastName).clear()
+                    textfield(_dateOfBirth).clear()
+                    textfield(_email).clear()
+                    textfield(_phoneNumber).clear()
                 }
             }
             button("Close") {

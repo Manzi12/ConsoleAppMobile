@@ -3,9 +3,9 @@ package org.consoleapp.com.models
 import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
-var lastId = 0L
+var lastId = 1000
 
-internal fun getId(): Long {
+internal fun getId(): Int {
     return lastId++
 }
 
@@ -16,7 +16,7 @@ class MemberMemStore: MemberStore {
         return members
     }
 
-    override fun findOne(id: Long) : MemberModel?{
+    override fun findOne(id: Int) : MemberModel?{
         var foundMember: MemberModel? = members.find { m -> m.id == id }
         return foundMember
     }

@@ -4,6 +4,10 @@ import org.consoleapp.com.models.MemberJSONStore
 import org.consoleapp.com.models.MemberMemStore
 import org.consoleapp.com.models.MemberModel
 import org.consoleapp.com.models.MemberStore
+import java.io.Console
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 import java.util.regex.Pattern
 
 class MemberView {
@@ -50,7 +54,8 @@ class MemberView {
         member.firstName = readLine()!!
         print("Enter Last Name: ")
         member.lastName = readLine()!!
-        print("Enter Your date of birth (dd/mm/yyyy) : ")
+        print("Enter Your date of birth (yyyy/mm/dd) : ")
+        //var dateOB: String = readLine()!!
         member.dateOfBirth = readLine()!!
         print("Enter Your Email: ")
         member.email = readLine()!!
@@ -70,6 +75,7 @@ class MemberView {
         var tempFName : String?
         var tempLName : String?
         var tempDob : String?
+        //var tempDOF : LocalDate?
         var tempEmail : String?
         var tempPnum : String?
 
@@ -78,8 +84,9 @@ class MemberView {
             tempFName = readLine()!!
             print("Enter a new last name for [ " + member.lastName + " ] : ")
             tempLName = readLine()!!
-            print("Enter a new date of birth for [ " + member.dateOfBirth + " ] : ")
+            print("Enter a new date of birth format yyyy-mm-dd [ " + member.dateOfBirth + " ] : ")
             tempDob = readLine()!!
+            //tempDOB = LocalDate.parse(tempDob, DateTimeFormatter.ISO_DATE)
             print("Enter a new email for [ " + member.email + " ] : ")
             tempEmail = readLine()!!
             print("Enter a new Phone number for [ " + member.phoneNumber + " ] : ")
@@ -97,13 +104,13 @@ class MemberView {
         return false
     }
 
-    fun getId() : Long{
+    fun getId() : Int{
         var strId : String?     // string to hold user input
-        var searchId : Long     // Long to hold converted id
+        var searchId : Int     // Long to hold converted id
         print("Enter Id to search/update")
         strId = readLine()!!
         searchId = if(strId.toLongOrNull() != null && !strId.isEmpty())
-            strId.toLong()
+            strId.toInt()
         else
             -9
         return searchId

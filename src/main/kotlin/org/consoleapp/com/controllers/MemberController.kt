@@ -2,8 +2,6 @@ package org.consoleapp.com.controllers
 
 import mu.KotlinLogging
 import org.consoleapp.com.models.MemberJSONStore
-import org.consoleapp.com.models.MemberMemStore
-import org.consoleapp.com.models.MemberStore
 import org.consoleapp.com.models.MemberModel
 import org.consoleapp.com.views.MemberView
 
@@ -91,15 +89,15 @@ class MemberController {
         memberView.showMembers(aMember)
     }
 
-    fun search(id: Long) : MemberModel?{
+    fun search(id: Int) : MemberModel?{
         var foundMember = members.findOne(id)
         return foundMember
     }
 
     fun dummyData(){
-        members.create(MemberModel(10L,"Manzi","Joseph","09/10/90","manzi@man","09856"))
-        members.create(MemberModel(11L,"Frank","Joseph","09/10/2023","frank@man","09328"))
-        members.create(MemberModel(12L,"James","Joseph","09/10/2025","james@man","09438"))
-        members.create(MemberModel(13L,"Hannah","Joseph","09/10/2022","hannah@man","09128"))
+        members.create(MemberModel(1000,"Manzi","Joseph","1790-10-19","manzi@man","09856"))
+        members.create(MemberModel(1200,"Frank","Joseph","1790-10-19","frank@man","09328"))
+        members.create(MemberModel(1300,"James","Joseph","1790-10-19","james@man","09438"))
+        members.create(MemberModel(1400,"Hannah","Joseph","1790-10-19","hannah@man","09128"))
     }
 }
