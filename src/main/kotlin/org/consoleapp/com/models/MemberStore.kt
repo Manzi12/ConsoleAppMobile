@@ -1,5 +1,6 @@
 package org.consoleapp.com.models
 
+// abstract class
 interface MemberStore {
     fun findAll(): List<MemberModel>
     fun findOne(id: Int) : MemberModel?

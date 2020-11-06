@@ -5,6 +5,9 @@ import org.consoleapp.com.models.MemberJSONStore
 import org.consoleapp.com.models.MemberModel
 import org.consoleapp.com.views.MemberView
 
+/**
+ * @author Manzi Joseph
+ */
 
 class MemberController {
     //val members = MemberMemStore()
@@ -17,6 +20,7 @@ class MemberController {
         println("Local Gym App Version 1.0")
     }
 
+    // the function that gets called to start the whole program
     fun start(){
         var input : Int
 
@@ -37,26 +41,32 @@ class MemberController {
         logger.info("Shutting Down Gym Console App")
     }
 
+    // the menu function that displays the menu
     private fun menu() : Int {
         return memberView.menu()
     }
 
+    // the add function allow the user to add a member
     private fun add(){
-        var aMember = MemberModel()
+        val aMember = MemberModel()
 
-        if(memberView.addMemberData(aMember))
+        if(memberView.addMemberData(aMember)) {
             members.create(aMember)
+            logger.info("Member Added Successfully")
+        }
         else
-            logger.info("Members Not Added")
+            logger.info("Members Not Added, Please check that you have filled all fields")
     }
 
+    // list members function
     private fun list(){
         memberView.listMembers(members)
     }
 
+    // update members function
     private fun update(){
         memberView.listMembers(members)
-        var searchId = memberView.getId()
+        val searchId = memberView.getId()
         val aMember = search(searchId)
 
         if(aMember != null){
@@ -70,9 +80,10 @@ class MemberController {
             println("Member Not Added")
     }
 
+    // delete members function
     private fun delete(){
         memberView.listMembers(members)
-        var searchId = memberView.getId()
+        val searchId = memberView.getId()
         val aMember = search(searchId)
 
         if(aMember != null){
@@ -84,19 +95,22 @@ class MemberController {
             println("Member Not Deleted....")
     }
 
+    // search members  function
     private fun search(){
         val aMember = search(memberView.getId())!!
         memberView.showMembers(aMember)
     }
 
+    // search members id function
     private fun search(id: Int) : MemberModel?{
         return members.findOne(id)
     }
 
+    // just some dummy data just in case
     private fun dummyData(){
-        members.create(MemberModel(1000,"Manzi","Joseph","1790-10-19","manzi@man","09856"))
-        members.create(MemberModel(1200,"Frank","Joseph","1790-10-19","frank@man","09328"))
-        members.create(MemberModel(1300,"James","Joseph","1790-10-19","james@man","09438"))
-        members.create(MemberModel(1400,"Hannah","Joseph","1790-10-19","hannah@man","09128"))
+        members.create(MemberModel(1000,"Luther Joseph","Waterford","Obese","09856","Male"))
+        members.create(MemberModel(1200,"Frank Manda","Dublin","Very Obese","09328", "Male"))
+        members.create(MemberModel(1300,"James wilson","Cork","Moderately Underweight","09438","Male"))
+        members.create(MemberModel(1400,"Hannah House" ,"London","UnderWeight","09128","Male"))
     }
 }

@@ -2,6 +2,11 @@ package org.consoleapp.com.models
 
 import mu.KotlinLogging
 
+/**
+ * @author Manzi Joseph
+ *
+ */
+
 private val logger = KotlinLogging.logger {}
 var lastId = 1000
 
@@ -10,42 +15,46 @@ internal fun getId(): Int {
 }
 
 class MemberMemStore: MemberStore {
-    val members = ArrayList<MemberModel>()
+    private val members = ArrayList<MemberModel>()
 
     override fun findAll() : List<MemberModel>{
         return members
     }
 
+    // overrides the findOne abstract function and implement the class function
     override fun findOne(id: Int) : MemberModel?{
-        var foundMember: MemberModel? = members.find { m -> m.id == id }
-        return foundMember
+        return members.find { m -> m.id == id }
     }
 
+    // overrides the create abstract function and implement the class function
     override fun create(member: MemberModel) {
         member.id = getId()
         members.add(member)
         logAll()
     }
 
+    // overrides the update abstract function and implement the class function
     override fun update(member: MemberModel) {
-        var foundMember = findOne(member.id!!)
+        val foundMember = findOne(member.id)
         if(foundMember != null){
-            foundMember.firstName = member.firstName
-            foundMember.lastName = member.lastName
-            foundMember.dateOfBirth = member.dateOfBirth
+            foundMember.fullName = member.fullName
+            foundMember.memberAddress = member.memberAddress
+            foundMember.BMICategory = member.BMICategory
             foundMember.email = member.email
-            foundMember.phoneNumber = member.phoneNumber
+            foundMember.gender = member.gender
         }
     }
 
+    // overrides the delete abstract function and implement the class function
     override fun delete(member: MemberModel) {
-        var foundMember = findOne(member.id!!)
+        val foundMember = findOne(member.id)
         if(foundMember != null){
             members.remove(foundMember)
         }
     }
 
+    // function to display all the members
     internal fun logAll(){
-        members.forEach { logger.info ("${it}")}
+        members.forEach { logger.info ("$it")}
     }
 }

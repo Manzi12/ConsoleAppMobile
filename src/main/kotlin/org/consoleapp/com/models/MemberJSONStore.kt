@@ -7,15 +7,18 @@ import mu.KotlinLogging
 import org.consoleapp.com.helpers.exists
 import org.consoleapp.com.helpers.read
 import org.consoleapp.com.helpers.write
+import java.lang.reflect.Type
 import java.util.ArrayList
 import kotlin.random.Random
 
-
+/**
+ * @author Manzi Joseph
+ */
 private val logger = KotlinLogging.logger {}
 
-val JSON_FILE = "members.json"
-val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
-val listType = object : TypeToken<ArrayList<MemberModel>>() {}.type
+const val JSON_FILE = "members.json"
+val gsonBuilder: Gson = GsonBuilder().setPrettyPrinting().create()
+val listType: Type? = object : TypeToken<ArrayList<MemberModel>>() {}.type
 
 fun generateRandomId(): Int {
     return Random.nextInt()
@@ -23,7 +26,7 @@ fun generateRandomId(): Int {
 
 
 class MemberJSONStore : MemberStore {
-    var members = mutableListOf<MemberModel>()
+    private var members = mutableListOf<MemberModel>()
 
     init {
         if(exists(JSON_FILE)){
@@ -31,50 +34,57 @@ class MemberJSONStore : MemberStore {
         }
     }
 
+    // overrides the findAll abstract function and implement the class function
     override fun findAll(): MutableList<MemberModel> {
         return members
     }
 
+    // overrides the findOne abstract function and implement the class function
     override fun findOne(id: Int): MemberModel? {
-        var foundMember : MemberModel? = members.find { m -> m.id == id }
-        return foundMember
+        return members.find { m -> m.id == id }
     }
 
+    // overrides the create abstract function and implement the class function
     override fun create(member: MemberModel) {
         member.id = generateRandomId()
         members.add(member)
         serialize()
     }
 
+    // overrides the update abstract function and implement the class function
     override fun update(member: MemberModel) {
-        var foundMember = findOne(member.id!!)
+        val foundMember = findOne(member.id)
         if(foundMember != null){
-            foundMember.firstName = member.firstName
-            foundMember.lastName = member.lastName
-            foundMember.dateOfBirth = member.dateOfBirth
+            foundMember.fullName = member.fullName
+            foundMember.memberAddress = member.memberAddress
+            foundMember.BMICategory = member.BMICategory
             foundMember.email = member.email
-            foundMember.phoneNumber = member.phoneNumber
+            foundMember.gender = member.gender
         }
         serialize()
     }
 
+    // overrides the delete abstract function and implement the class function
     override fun delete(member: MemberModel) {
-        var foundMember = findOne(member.id!!)
+        val foundMember = findOne(member.id)
         if(foundMember != null){
             members.remove(foundMember)
         }
         serialize()
     }
 
+    // function to display all the members
     internal fun logAll(){
-        members.forEach { logger.info("${it}")}
+        members.forEach { logger.info("$it")}
     }
 
+    // function to convert the member type to json format and persist
     private fun serialize(){
-        var jsonString = gsonBuilder.toJson(members, listType)
+        val jsonString = gsonBuilder.toJson(members, listType)
         write(JSON_FILE, jsonString)
     }
 
+    // function to convert from json format to member type the persisted datta
     private fun deserialize(){
         val jsonString = read(JSON_FILE)
         members = Gson().fromJson(jsonString, listType)

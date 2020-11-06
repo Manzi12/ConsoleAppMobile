@@ -10,7 +10,12 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.regex.Pattern
 
+/**
+ * @author Manzi Joseph
+ */
+
 class MemberView {
+    // menu function interact with the user
     fun menu(): Int{
         var option : Int
         var input: String?
@@ -34,6 +39,7 @@ class MemberView {
     }
 
 
+    // lsit function displays the members list not persisited
     fun listMembers(members : MemberMemStore){
         println("List All Members")
         println()
@@ -41,6 +47,7 @@ class MemberView {
         println()
     }
 
+    // lsit function displays the members list  persisited
     fun listMembers(members : MemberJSONStore){
         println("List All Members")
         println()
@@ -48,66 +55,65 @@ class MemberView {
         println()
     }
 
+    // lsit function allows you to add a member
     fun addMemberData(member : MemberModel) : Boolean{
         println()
-        print("Enter your first name : ")
-        member.firstName = readLine()!!
-        print("Enter Last Name: ")
-        member.lastName = readLine()!!
-        print("Enter Your date of birth (yyyy/mm/dd) : ")
-        //var dateOB: String = readLine()!!
-        member.dateOfBirth = readLine()!!
+        print("Enter your full name : ")
+        member.fullName = readLine()!!
+        print("Enter your Address: ")
+        member.memberAddress = readLine()!!
+        print("Tell us your BMI Category : ")
+        member.BMICategory = readLine()!!
         print("Enter Your Email: ")
         member.email = readLine()!!
-        print("Enter Your Phone Number (0123456789): ")
-        member.phoneNumber = readLine()!!
-        return member.firstName.isNotEmpty() && member.email.isNotEmpty()
+        print("Enter Your Gender (Male/Female): ")
+        member.gender = readLine()!!
+        return member.fullName.isNotEmpty() &&
+                member.memberAddress.isNotEmpty() &&
+                member.BMICategory.isNotEmpty() &&
+                member.email.isEmailValid()
     }
 
+    // this function displays the member details
     fun showMembers(member : MemberModel){
-        if(member != null)
-            println("Member Details [$member]")
-        else
-            print("Member not found")
+        println("Member Details [$member]")
     }
 
+    // this functions enables the member to update details
     fun updateMemberData(member: MemberModel) : Boolean{
         var tempFName : String?
-        var tempLName : String?
-        var tempDob : String?
-        //var tempDOF : LocalDate?
+        var tempMAddress : String?
+        var tempBmiCat : String?
         var tempEmail : String?
-        var tempPnum : String?
+        var tempGender : String?
 
-        if(member != null) {
-            print("Enter a new first name for [ " + member.firstName + " ] : ")
-            tempFName = readLine()!!
-            print("Enter a new last name for [ " + member.lastName + " ] : ")
-            tempLName = readLine()!!
-            print("Enter a new date of birth format yyyy-mm-dd [ " + member.dateOfBirth + " ] : ")
-            tempDob = readLine()!!
-            //tempDOB = LocalDate.parse(tempDob, DateTimeFormatter.ISO_DATE)
-            print("Enter a new email for [ " + member.email + " ] : ")
-            tempEmail = readLine()!!
-            print("Enter a new Phone number for [ " + member.phoneNumber + " ] : ")
-            tempPnum = readLine()!!
+        print("Enter a new full name for [ " + member.fullName + " ] : ")
+        tempFName = readLine()!!
+        print("Enter a new address for [ " + member.memberAddress + " ] : ")
+        tempMAddress = readLine()!!
+        print("Enter a new BMI Category [ " + member.BMICategory + " ] : ")
+        tempBmiCat = readLine()!!
+        print("Enter a new email for [ " + member.email + " ] : ")
+        tempEmail = readLine()!!
+        print("Enter a new Gender for [ " + member.gender + " ] : ")
+        tempGender = readLine()!!
 
-            if(!tempFName.isNullOrEmpty() && !tempEmail.isNullOrEmpty()){
-                member.firstName = tempFName
-                member.lastName = tempLName
-                member.dateOfBirth = tempDob
-                member.email = tempEmail
-                member.phoneNumber = tempPnum
-                return true
-            }
+        if(!tempFName.isNullOrEmpty() && !tempEmail.isNullOrEmpty()){
+            member.fullName = tempFName
+            member.memberAddress = tempMAddress
+            member.BMICategory = tempBmiCat
+            member.email = tempEmail
+            member.gender = tempGender
+            return true
         }
         return false
     }
 
+    // function used to get an id used for searching and deleting
     fun getId() : Int{
         var strId : String?     // string to hold user input
         var searchId : Int     // Long to hold converted id
-        print("Enter Id to search/update")
+        print("Enter Id to search/update : ")
         strId = readLine()!!
         searchId = if(strId.toLongOrNull() != null && !strId.isEmpty())
             strId.toInt()
@@ -116,6 +122,7 @@ class MemberView {
         return searchId
     }
 
+    // function used to validate the email pattern. if not valid member wont be added
     fun String.isEmailValid(): Boolean{
         val expression = "^[\\w.-]+@([\\w\\-]+\\.)+[A-Z]{2,8}$"
         val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
