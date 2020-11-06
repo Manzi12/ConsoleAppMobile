@@ -8,9 +8,9 @@ import org.consoleapp.com.views.MemberView
 
 class MemberController {
     //val members = MemberMemStore()
-    val members = MemberJSONStore()
-    val memberView = MemberView()
-    val logger = KotlinLogging.logger {}
+    private val members = MemberJSONStore()
+    private val memberView = MemberView()
+    private val logger = KotlinLogging.logger {}
 
     init {
         logger.info {"Launching LOCAL GYM APP Console APP"}
@@ -29,7 +29,7 @@ class MemberController {
                 4 -> search()
                 5 -> delete()
                 -99 -> dummyData()
-                -1 -> println("Exiting App")
+                100 -> println("Exiting App")
                 else -> println("Invalid Option")
             }
             println()
@@ -37,11 +37,11 @@ class MemberController {
         logger.info("Shutting Down Gym Console App")
     }
 
-    fun menu() : Int {
+    private fun menu() : Int {
         return memberView.menu()
     }
 
-    fun add(){
+    private fun add(){
         var aMember = MemberModel()
 
         if(memberView.addMemberData(aMember))
@@ -50,11 +50,11 @@ class MemberController {
             logger.info("Members Not Added")
     }
 
-    fun list(){
+    private fun list(){
         memberView.listMembers(members)
     }
 
-    fun update(){
+    private fun update(){
         memberView.listMembers(members)
         var searchId = memberView.getId()
         val aMember = search(searchId)
@@ -70,7 +70,7 @@ class MemberController {
             println("Member Not Added")
     }
 
-    fun delete(){
+    private fun delete(){
         memberView.listMembers(members)
         var searchId = memberView.getId()
         val aMember = search(searchId)
@@ -84,17 +84,16 @@ class MemberController {
             println("Member Not Deleted....")
     }
 
-    fun search(){
+    private fun search(){
         val aMember = search(memberView.getId())!!
         memberView.showMembers(aMember)
     }
 
-    fun search(id: Int) : MemberModel?{
-        var foundMember = members.findOne(id)
-        return foundMember
+    private fun search(id: Int) : MemberModel?{
+        return members.findOne(id)
     }
 
-    fun dummyData(){
+    private fun dummyData(){
         members.create(MemberModel(1000,"Manzi","Joseph","1790-10-19","manzi@man","09856"))
         members.create(MemberModel(1200,"Frank","Joseph","1790-10-19","frank@man","09328"))
         members.create(MemberModel(1300,"James","Joseph","1790-10-19","james@man","09438"))
